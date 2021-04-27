@@ -190,12 +190,15 @@ class Generator
         $parameters = $action_instance->getParameters();
 
         foreach ($parameters as $parameter) {
-            $class_name = $name = $parameter->getType() && !$parameter->getType()->isBuiltin()
+            $class = $parameter->getType() && !$parameter->getType()->isBuiltin()
                 ? new \ReflectionClass($parameter->getType()->getName())
                 : null;
 
-            if (is_subclass_of($class_name, FormRequest::class)) {
-                return (new $class_name)->rules();
+            if ($class and $class->isSubclassOf(new \ReflectionClass('App\Http\Requests\BaseRequest'))) {
+                $class_name = $parameter->getType()->getName();
+                $request = new $class_name;
+                $request->fromSwagger = true;
+                return $request->rules();
             }
         }
 
