@@ -42,7 +42,6 @@ class GenerateSwaggerDoc extends Command
         $formattedDocs = (new FormatterManager($docs))
             ->setFormat($this->option('format'))
             ->format();
-        $this->info(gettype($formattedDocs));
 
         if ($file) {
             file_put_contents($file, $formattedDocs);
