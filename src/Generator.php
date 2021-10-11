@@ -161,11 +161,7 @@ class Generator
             'summary' => $summary,
             'description' => $description,
             'deprecated' => $isDeprecated,
-            'responses' => [
-                '200' => [
-                    'description' => 'OK',
-                ],
-            ],
+            'responses' => $responses,
         ];
 
         $this->addActionParameters();
