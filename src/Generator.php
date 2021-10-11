@@ -133,23 +133,22 @@ class Generator
 
         [$isDeprecated, $summary, $description] = $this->parseActionDocBlock($docBlock);
         
-        $responses = [];
+        $responses = [
+            '200' => [
+                'description' => 'OK',
+            ],
+            '422' => [
+                'description' => 'Unprocessable Entity',
+            ],
+       ];
+
         if (strtolower($this->method) == 'post') {
-            $responses[] = [
+            $responses = [
                 '200' => [
                     'description' => 'OK',
                 ],
                 '201' => [
                     'description' => 'Created',
-                ],
-                '422' => [
-                    'description' => 'Unprocessable Entity',
-                ],
-           ];
-        } else {
-            $responses[] = [
-                '200' => [
-                    'description' => 'OK',
                 ],
                 '422' => [
                     'description' => 'Unprocessable Entity',
