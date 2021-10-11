@@ -132,6 +132,30 @@ class Generator
         $docBlock = $actionInstance ? ($actionInstance->getDocComment() ?: '') : '';
 
         [$isDeprecated, $summary, $description] = $this->parseActionDocBlock($docBlock);
+        
+        $responses = [];
+        if (strtolower($this->method) == 'post') {
+            $responses[] = [
+                '200' => [
+                    'description' => 'OK',
+                ],
+                '201' => [
+                    'description' => 'Created',
+                ],
+                '422' => [
+                    'description' => 'Unprocessable Entity',
+                ],
+           ];
+        } else {
+            $responses[] = [
+                '200' => [
+                    'description' => 'OK',
+                ],
+                '422' => [
+                    'description' => 'Unprocessable Entity',
+                ],
+           ];
+        }
 
         $this->docs['paths'][$this->route->uri()][$this->method] = [
             'summary' => $summary,
